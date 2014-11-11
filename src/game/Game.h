@@ -2,6 +2,8 @@
 
 #include <SFML/Graphics.hpp>
 #include "entities/Unit.h"
+#include "entities/HumanPlayer.h"
+#include "entities/AIPlayer.h"
 
 class Game {
 public:
@@ -11,5 +13,8 @@ public:
 
 private:
 	sf::RenderWindow*	m_Window;
-	Unit				m_Unit;
+	HumanPlayer			m_Player;
+	AIPlayer			m_AI;
+	std::vector<Unit>	m_PlayerUnits;
+	std::vector<Unit>	m_AIUnits;
 };

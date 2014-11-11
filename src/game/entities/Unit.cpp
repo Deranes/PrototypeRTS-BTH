@@ -1,28 +1,32 @@
 #include "Unit.h"
 
-#include "../../input/GlobalMouse.h"
 #include "../../math/Math.h"
+#include "Player.h"
 
 using namespace sf;
 using namespace math;
 
-void Unit::Initialize( const sf::Vector2f& position ) {
+void Unit::Initialize( const sf::Vector2f& position, Player* owner ) {
 	m_Position			= position;
 	m_TargetPosition	= position;
+	m_Owner				= owner;
 
-	m_Sprite.setFillColor( sf::Color::Blue );
+	m_Sprite.setFillColor( owner->GetColor() );
 	m_Sprite.setRadius( UNIT_RADIUS );
+	m_Sprite.setOrigin( UNIT_RADIUS, UNIT_RADIUS );
 }
 
 void Unit::Update( float deltaTime ) {
-	if ( g_Mouse.RightClick() ) {
-		m_TargetPosition = Vector2f( g_Mouse.Position().x, g_Mouse.Position().y );
+	const Vector2f	distance	= m_TargetPosition - m_Position;
+	const float		distLeft	= vec2f::Length( distance );
+	const float		maxDist		= UNIT_MOVESPEED * deltaTime;
+	
+	if ( distLeft <= maxDist ) {
+		m_UnitState = UnitState::Idle;
 	}
 
-	Vector2f distance = m_TargetPosition - m_Position;
-	
 	if ( distance.x != 0.0f || distance.y != 0.0f ) {
-		m_Position += UNIT_MOVESPEED * deltaTime * vec2f::Normalize( distance );
+		m_Position += ( fminf(distLeft, maxDist) / distLeft ) * distance;
 	}
 }
 
@@ -30,4 +34,13 @@ void Unit::Draw( sf::RenderWindow* window ) {
 	m_Sprite.setPosition( m_Position );
 
 	window->draw( m_Sprite );
+}
+
+void Unit::CommandMove( const sf::Vector2f& targetPosition ) {
+	m_TargetPosition	= targetPosition;
+	m_UnitState			= UnitState::Moving;
+}
+
+const UnitState& Unit::GetUnitState() {
+	return m_UnitState;
 }

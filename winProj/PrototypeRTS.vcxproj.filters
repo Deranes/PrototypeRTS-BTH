@@ -34,6 +34,15 @@
     <ClCompile Include="..\src\math\Vector2f.cpp">
       <Filter>Source Files\math</Filter>
     </ClCompile>
+    <ClCompile Include="..\src\game\entities\Player.cpp">
+      <Filter>Source Files\game\entities</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\game\entities\HumanPlayer.cpp">
+      <Filter>Source Files\game\entities</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\game\entities\AIPlayer.cpp">
+      <Filter>Source Files\game\entities</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\src\game\Game.h">
@@ -50,6 +59,15 @@
     </ClInclude>
     <ClInclude Include="..\src\math\Vector2f.h">
       <Filter>Source Files\math</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\game\entities\Player.h">
+      <Filter>Source Files\game\entities</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\game\entities\AIPlayer.h">
+      <Filter>Source Files\game\entities</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\game\entities\HumanPlayer.h">
+      <Filter>Source Files\game\entities</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
