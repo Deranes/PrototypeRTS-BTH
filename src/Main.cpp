@@ -3,7 +3,10 @@
 #include "input/GlobalMouse.h"
 
 int main() {
-    sf::RenderWindow window(sf::VideoMode(1600, 900), "Large Game Project - RTS Prototype 0.1");
+	sf::ContextSettings settings;
+	settings.antialiasingLevel = 4;
+
+    sf::RenderWindow window(sf::VideoMode(1600, 900), "Large Game Project - RTS Prototype 0.2 - Multiple players", sf::Style::Default, settings );
 
 	Game game;
 	game.Initialize( &window );
