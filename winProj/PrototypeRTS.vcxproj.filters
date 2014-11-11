@@ -14,6 +14,9 @@
     <Filter Include="Source Files\input">
       <UniqueIdentifier>{fae2e612-d6c2-4c90-b936-986b522b3c32}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\math">
+      <UniqueIdentifier>{79be3a35-9211-4c7e-bc29-d18f3e756b23}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\src\Main.cpp">
@@ -28,6 +31,9 @@
     <ClCompile Include="..\src\input\GlobalMouse.cpp">
       <Filter>Source Files\input</Filter>
     </ClCompile>
+    <ClCompile Include="..\src\math\Vector2f.cpp">
+      <Filter>Source Files\math</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\src\game\Game.h">
@@ -38,6 +44,12 @@
     </ClInclude>
     <ClInclude Include="..\src\input\GlobalMouse.h">
       <Filter>Source Files\input</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\math\Math.h">
+      <Filter>Source Files\math</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\math\Vector2f.h">
+      <Filter>Source Files\math</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

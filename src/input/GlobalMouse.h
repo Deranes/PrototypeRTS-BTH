@@ -12,6 +12,7 @@ public:
 
 	void				Update( const sf::RenderWindow& window );
 	bool				LeftClick();
+	bool				RightClick();
 	const Vector2i&		Position();
 
 private:
@@ -20,4 +21,6 @@ private:
 	Vector2i			m_Position;
 	bool				m_LeftPressedThisFrame;
 	bool				m_LeftPressedPreviousFrame;
+	bool				m_RightPressedThisFrame;
+	bool				m_RightPressedPreviousFrame;
 };

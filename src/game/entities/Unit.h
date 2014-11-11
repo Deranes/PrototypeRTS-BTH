@@ -2,7 +2,8 @@
 
 #include <SFML/Graphics.hpp>
 
-#define UNIT_RADIUS	20.0f
+#define UNIT_RADIUS		20.0f
+#define UNIT_MOVESPEED	200.0f
 
 class Unit {
 public:
@@ -11,6 +12,7 @@ public:
 	void				Draw		( sf::RenderWindow* window );
 
 private:
-	sf::Vector2f		m_Position;
 	sf::CircleShape		m_Sprite;
+	sf::Vector2f		m_Position;
+	sf::Vector2f		m_TargetPosition;
 };

@@ -23,11 +23,14 @@
     <ClCompile Include="..\src\game\Game.cpp" />
     <ClCompile Include="..\src\input\GlobalMouse.cpp" />
     <ClCompile Include="..\src\Main.cpp" />
+    <ClCompile Include="..\src\math\Vector2f.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\src\game\entities\Unit.h" />
     <ClInclude Include="..\src\game\Game.h" />
     <ClInclude Include="..\src\input\GlobalMouse.h" />
+    <ClInclude Include="..\src\math\Math.h" />
+    <ClInclude Include="..\src\math\Vector2f.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{80A88DC1-FF53-4B1D-BD4E-C984CED31474}</ProjectGuid>
