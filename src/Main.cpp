@@ -1,6 +1,6 @@
 #include <SFML/Graphics.hpp>
-
 #include "game/Game.h"
+#include "input/GlobalMouse.h"
 
 int main() {
     sf::RenderWindow window(sf::VideoMode(1600, 900), "Large Game Project - RTS Prototype 0.1");
@@ -17,11 +17,19 @@ int main() {
                 window.close();
 			}
         }
+		if ( sf::Keyboard::isKeyPressed( sf::Keyboard::Escape ) ){
+			window.close();
+		}
 
 		sf::Time deltaTime = deltaClock.restart();
 
+		g_Mouse.Update( window );
+
 		game.Update( deltaTime.asSeconds() );
+
+		window.clear( sf::Color::White );
 		game.Draw();
+		window.display();
     }
 
     return 0;	// EXIT_SUCCESS

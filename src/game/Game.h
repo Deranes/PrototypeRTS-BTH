@@ -1,6 +1,7 @@
 #pragma once
 
 #include <SFML/Graphics.hpp>
+#include "entities/Unit.h"
 
 class Game {
 public:
@@ -10,4 +11,5 @@ public:
 
 private:
 	sf::RenderWindow*	m_Window;
+	Unit				m_Unit;
 };

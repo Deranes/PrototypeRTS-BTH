@@ -8,6 +8,12 @@
     <Filter Include="Source Files\game">
       <UniqueIdentifier>{e767ca95-87e1-43d0-8f81-538f97f4e255}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\game\entities">
+      <UniqueIdentifier>{84ce904e-18c6-427c-b2a2-26140c1ffbdd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\input">
+      <UniqueIdentifier>{fae2e612-d6c2-4c90-b936-986b522b3c32}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\src\Main.cpp">
@@ -16,10 +22,22 @@
     <ClCompile Include="..\src\game\Game.cpp">
       <Filter>Source Files\game</Filter>
     </ClCompile>
+    <ClCompile Include="..\src\game\entities\Unit.cpp">
+      <Filter>Source Files\game\entities</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\input\GlobalMouse.cpp">
+      <Filter>Source Files\input</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\src\game\Game.h">
       <Filter>Source Files\game</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\game\entities\Unit.h">
+      <Filter>Source Files\game\entities</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\input\GlobalMouse.h">
+      <Filter>Source Files\input</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
