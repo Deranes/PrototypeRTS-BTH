@@ -1,24 +1,28 @@
 #include <SFML/Graphics.hpp>
 
-int main()
-{
-    sf::RenderWindow window(sf::VideoMode(200, 200), "SFML works!");
-    sf::CircleShape shape(100.f);
-    shape.setFillColor(sf::Color::Green);
+#include "game/Game.h"
 
-    while (window.isOpen())
-    {
+int main() {
+    sf::RenderWindow window(sf::VideoMode(1600, 900), "Large Game Project - RTS Prototype 0.1");
+
+	Game game;
+	game.Initialize( &window );
+
+	sf::Clock deltaClock;
+
+    while ( window.isOpen() ) {
         sf::Event event;
-        while (window.pollEvent(event))
-        {
-            if (event.type == sf::Event::Closed)
+        while ( window.pollEvent( event ) ) {
+            if ( event.type == sf::Event::Closed ) {
                 window.close();
+			}
         }
 
-        window.clear();
-        window.draw(shape);
-        window.display();
+		sf::Time deltaTime = deltaClock.restart();
+
+		game.Update( deltaTime.asSeconds() );
+		game.Draw();
     }
 
-    return 0;
+    return 0;	// EXIT_SUCCESS
 }
