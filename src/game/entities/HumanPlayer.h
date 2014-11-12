@@ -4,5 +4,9 @@
 
 class HumanPlayer : public Player {
 public:
-	virtual void Update( std::vector<Unit>& unitsFriendly, std::vector<Unit>& unitsHostile );
+	virtual void	Initialize( sf::Color color );
+	virtual void	Update( std::vector<Unit>& unitsFriendly, std::vector<Unit>& unitsHostile );
+
+private:
+	bool			m_WaitingForAttackPosition;
 };

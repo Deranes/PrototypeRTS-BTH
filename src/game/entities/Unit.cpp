@@ -15,6 +15,7 @@ void Unit::Initialize( const sf::Vector2f& position, Player* owner ) {
 	m_Owner			= owner;
 
 	m_HP			= UNIT_HP_MAX;
+	m_UnitState		= UnitState::Idle;
 
 	m_Sprite.setFillColor( owner->GetColor() );
 	m_Sprite.setRadius( UNIT_RADIUS );
@@ -25,13 +26,22 @@ void Unit::Initialize( const Unit& toClone ) {
 	Initialize( toClone.GetPosition(), toClone.GetOwner() );
 }
 
-void Unit::Update( float deltaTime ) {
+void Unit::Update( float deltaTime, std::vector<Unit>& unitsHostile ) {
 	m_AttackCooldownLeft -= deltaTime;
 	if ( m_AttackCooldownLeft > 0.0f ) {
 		return;
 	}
 
 	switch ( m_UnitState ) {
+		case UnitState::Idle : {
+			for ( auto& enemy : unitsHostile ) {
+				if ( math::vec2f::LengthSqrd( m_Position - enemy.GetPosition() ) <= UNIT_AGGRO_DISTANCE * UNIT_AGGRO_DISTANCE ) {
+					CommandAttackTarget( &enemy );
+					break;
+				}
+			}
+		} break;
+
 		case UnitState::Moving : {
 			const Vector2f	distance	= m_MoveTo - m_Position;
 			const float		distLeft	= vec2f::Length( distance );
@@ -59,6 +69,20 @@ void Unit::Update( float deltaTime ) {
 				m_Position += ( fminf(distLeft, maxDist) / distLeft ) * distance;
 			}
 		} break;
+
+		case UnitState::AttackMoving : {
+			const Vector2f	distance	= m_MoveTo - m_Position;
+			const float		distLeft	= vec2f::Length( distance );
+			const float		maxDist		= UNIT_MOVESPEED * deltaTime;
+
+			if ( distLeft <= maxDist ) {
+				m_UnitState = UnitState::Idle;
+			}
+
+			if ( distance.x != 0.0f || distance.y != 0.0f ) {
+				m_Position += ( fminf(distLeft, maxDist) / distLeft ) * distance;
+			}
+		} break;
 	}
 }
 
@@ -73,13 +97,19 @@ void Unit::CommandMove( const sf::Vector2f& targetPosition ) {
 	m_UnitState		= UnitState::Moving;
 }
 
+void Unit::CommandAttackMove( const sf::Vector2f& targetPosition ) {
+	m_MoveTo		= targetPosition;
+	m_UnitState		= UnitState::AttackMoving;
+	m_AttackTarget	= nullptr;
+}
+
 void Unit::CommandAttackTarget( Unit* target ) {
 	m_AttackTarget	= target;
 	m_UnitState		= UnitState::MovingToAttack;
 }
 
 void Unit::CalcPenetrationResolve( Unit* other, sf::Vector2f* outAppendResult ) {
-	Vector2f distance = m_Position != other->GetPosition() ? m_Position - other->GetPosition() : Vector2f( RANDF, RANDF );
+	Vector2f		distance		= m_Position != other->GetPosition() ? m_Position - other->GetPosition() : Vector2f( RANDF, RANDF );
 	const float		distanceAsFloat	= vec2f::Length( distance );
 	const float		penetration		= ( UNIT_RADIUS * 2 ) - distanceAsFloat;
 

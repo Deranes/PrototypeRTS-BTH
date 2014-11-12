@@ -27,10 +27,10 @@ void Game::Update( float deltaTime ) {
 	m_AI.Update( m_AIUnits, m_PlayerUnits );
 
 	for ( auto& unit : m_PlayerUnits ) {
-		unit.Update( deltaTime );
+		unit.Update( deltaTime, m_AIUnits );
 	}
 	for ( auto& unit : m_AIUnits ) {
-		unit.Update( deltaTime );
+		unit.Update( deltaTime, m_PlayerUnits );
 	}
 
 	// Check for deaths

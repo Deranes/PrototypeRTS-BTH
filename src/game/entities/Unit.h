@@ -11,6 +11,7 @@
 #define UNIT_MELEE_COOLDOWN	0.5f
 
 #define UNIT_RESOURCE_COST	5
+#define UNIT_AGGRO_DISTANCE	300.0f
 
 class Player;
 
@@ -18,16 +19,18 @@ enum class UnitState {
 	Idle,
 	Moving,
 	MovingToAttack,
+	AttackMoving
 };
 
 class Unit {
 public:
 	void					Initialize				( const sf::Vector2f& position, Player* owner );
 	void					Initialize				( const Unit& toClone );
-	void					Update					( float deltaTime );
+	void					Update					( float deltaTime, std::vector<Unit>& unitsHostile );
 	void					Draw					( sf::RenderWindow* window );
 
 	void					CommandMove				( const sf::Vector2f& targetPosition );
+	void					CommandAttackMove		( const sf::Vector2f& targetPosition );
 	void					CommandAttackTarget		( Unit* target );
 	void					CalcPenetrationResolve	( Unit* other, sf::Vector2f* outAppendResult );
 	void					Damage					( int damage );
