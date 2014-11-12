@@ -31,6 +31,35 @@ void Game::Update( float deltaTime ) {
 	for ( auto& unit : m_AIUnits ) {
 		unit.Update( deltaTime );
 	}
+
+	// Resolve collisions by pushing units away from each other.
+	for ( auto& unit : m_PlayerUnits ) {
+		Vector2f penetrationTotal( 0.0f, 0.0f);
+		for ( auto& friendlyUnit : m_PlayerUnits ) {
+			if ( &unit == &friendlyUnit ) {
+				continue;
+			}
+			unit.CalcPenetrationResolve( &friendlyUnit, &penetrationTotal );
+		}
+		for ( auto& enemyUnit : m_AIUnits ) {
+			unit.CalcPenetrationResolve( &enemyUnit, &penetrationTotal );
+		}
+		unit.SetPosition( unit.GetPosition() + UNIT_PENETRATION_RESOLVING * penetrationTotal );
+	}
+
+	for ( auto& unit : m_AIUnits ) {
+		Vector2f penetrationTotal( 0.0f, 0.0f);
+		for ( auto& friendlyUnit : m_AIUnits ) {
+			if ( &unit == &friendlyUnit ) {
+				continue;
+			}
+			unit.CalcPenetrationResolve( &friendlyUnit, &penetrationTotal );
+		}
+		for ( auto& enemyUnit : m_PlayerUnits ) {
+			unit.CalcPenetrationResolve( &enemyUnit, &penetrationTotal );
+		}
+		unit.SetPosition( unit.GetPosition() + UNIT_PENETRATION_RESOLVING * penetrationTotal );
+	}
 }
 
 void Game::Draw() {

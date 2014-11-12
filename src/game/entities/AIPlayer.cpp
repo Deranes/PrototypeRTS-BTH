@@ -7,8 +7,8 @@
 
 void AIPlayer::Update( std::vector<Unit>& unitsFriendly, std::vector<Unit>& unitsHostile ) {
 	for ( auto& unit : unitsFriendly ) {
-		if ( unit.GetUnitState() == UnitState::Idle ) {
-			unit.CommandMove( sf::Vector2f( RANDF * 1600.0f, RANDF * 900.0f ) );
+		for ( auto& enemy : unitsHostile ) {
+			unit.CommandAttackTarget( &enemy );
 		}
 	}
 }
