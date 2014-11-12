@@ -5,7 +5,7 @@
 #include "entities/HumanPlayer.h"
 #include "entities/AIPlayer.h"
 
-#define UNIT_PENETRATION_RESOLVING	0.2f
+#define UNIT_PENETRATION_RESOLVING	0.4f
 
 class Game {
 public:

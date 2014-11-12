@@ -7,6 +7,8 @@
 using namespace sf;
 using namespace math;
 
+#define RANDF	( rand() / static_cast<float>(RAND_MAX) )
+
 void Unit::Initialize( const sf::Vector2f& position, Player* owner ) {
 	m_Position		= position;
 	m_MoveTo		= position;
@@ -17,6 +19,10 @@ void Unit::Initialize( const sf::Vector2f& position, Player* owner ) {
 	m_Sprite.setFillColor( owner->GetColor() );
 	m_Sprite.setRadius( UNIT_RADIUS );
 	m_Sprite.setOrigin( UNIT_RADIUS, UNIT_RADIUS );
+}
+
+void Unit::Initialize( const Unit& toClone ) {
+	Initialize( toClone.GetPosition(), toClone.GetOwner() );
 }
 
 void Unit::Update( float deltaTime ) {
@@ -73,7 +79,7 @@ void Unit::CommandAttackTarget( Unit* target ) {
 }
 
 void Unit::CalcPenetrationResolve( Unit* other, sf::Vector2f* outAppendResult ) {
-	const Vector2f	distance		=  m_Position - other->GetPosition();
+	Vector2f distance = m_Position != other->GetPosition() ? m_Position - other->GetPosition() : Vector2f( RANDF, RANDF );
 	const float		distanceAsFloat	= vec2f::Length( distance );
 	const float		penetration		= ( UNIT_RADIUS * 2 ) - distanceAsFloat;
 
@@ -86,16 +92,20 @@ void Unit::Damage( int damage ) {
 	m_HP -= damage;
 }
 
-const sf::Vector2f& Unit::GetPosition() {
+const sf::Vector2f& Unit::GetPosition() const {
 	return m_Position;
 }
 
-const UnitState& Unit::GetUnitState() {
+const UnitState& Unit::GetUnitState() const {
 	return m_UnitState;
 }
 
-int Unit::GetHP() {
+int Unit::GetHP() const {
 	return m_HP;
+}
+
+Player*	Unit::GetOwner ( ) const {
+	return m_Owner;
 }
 
 void Unit::SetPosition( const sf::Vector2f& newPosition ) {

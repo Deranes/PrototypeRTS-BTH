@@ -7,6 +7,8 @@
 using namespace sf;
 
 void HumanPlayer::Update( std::vector<Unit>& unitsFriendly, std::vector<Unit>& unitsHostile ) {
+	m_WantsToClone = false;
+
 	if ( g_Mouse.RightClick() ) {
 		Vector2f targetPosition = Vector2f( g_Mouse.Position().x, g_Mouse.Position().y );
 		Unit* enemyTarget = nullptr;
@@ -30,4 +32,9 @@ void HumanPlayer::Update( std::vector<Unit>& unitsFriendly, std::vector<Unit>& u
 			}
 		}
 	}
+
+	static bool cloneKeyPressedPreviousFrame	= false;
+	bool cloneKeyPressedThisFrame				= Keyboard::isKeyPressed( Keyboard::Key::C );
+	m_WantsToClone								= cloneKeyPressedThisFrame && !cloneKeyPressedPreviousFrame;
+	cloneKeyPressedPreviousFrame				= cloneKeyPressedThisFrame;
 }

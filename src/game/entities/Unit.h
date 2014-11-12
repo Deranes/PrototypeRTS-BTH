@@ -21,6 +21,7 @@ enum class UnitState {
 class Unit {
 public:
 	void					Initialize				( const sf::Vector2f& position, Player* owner );
+	void					Initialize				( const Unit& toClone );
 	void					Update					( float deltaTime );
 	void					Draw					( sf::RenderWindow* window );
 
@@ -29,9 +30,10 @@ public:
 	void					CalcPenetrationResolve	( Unit* other, sf::Vector2f* outAppendResult );
 	void					Damage					( int damage );
 
-	const sf::Vector2f&		GetPosition				( );
-	const UnitState&		GetUnitState			( );
-	int						GetHP					( );
+	const sf::Vector2f&		GetPosition				( ) const;
+	const UnitState&		GetUnitState			( ) const;
+	int						GetHP					( ) const;
+	Player*					GetOwner				( ) const;
 
 	void					SetPosition				( const sf::Vector2f& newPosition );
 

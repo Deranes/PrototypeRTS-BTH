@@ -11,6 +11,10 @@ public:
 	virtual void		Update				( std::vector<Unit>& unitsFriendly, std::vector<Unit>& unitsHostile );
 
 	const sf::Color&	GetColor			( );
+	bool				GetWantsToClone		( );
+
+protected:
+	bool				m_WantsToClone;
 
 private:
 	sf::Color			m_Color;

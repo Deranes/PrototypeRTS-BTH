@@ -54,6 +54,14 @@ void Game::Update( float deltaTime ) {
 		g_TextPrinter.PrintText( "VICTORY", Vector2i( m_Window->getSize().x / 2, m_Window->getSize().y / 3 ), 200, Color::Blue, Vector2f( 0.5f, 1.0f ) );
 	}
 
+	// Cloning
+	if ( m_Player.GetWantsToClone() ) {
+		m_PlayerUnits.insert( m_PlayerUnits.end(), m_PlayerUnits.begin(), m_PlayerUnits.end() );
+	}
+	if ( m_AI.GetWantsToClone() ) {
+		m_AIUnits.insert( m_AIUnits.end(), m_AIUnits.begin(), m_AIUnits.end() );
+	}
+
 	// Resolve collisions by pushing units away from each other.
 	for ( auto& unit : m_PlayerUnits ) {
 		Vector2f penetrationTotal( 0.0f, 0.0f);
