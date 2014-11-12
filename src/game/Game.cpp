@@ -1,5 +1,7 @@
 #include "Game.h"
 
+#include "../graphics/TextPrinter.h"
+
 using namespace sf;
 
 void Game::Initialize( sf::RenderWindow* window ) {
@@ -42,6 +44,15 @@ void Game::Update( float deltaTime ) {
 			m_AIUnits.erase( m_AIUnits.begin() + i );
 		}
 	}
+	
+	// Victory condition
+	if ( m_PlayerUnits.size() == 0 ) {
+		// AI Wins
+		g_TextPrinter.PrintText( "DEFEAT", Vector2i( m_Window->getSize().x / 2, m_Window->getSize().y / 3 ), 200, Color::Red, Vector2f( 0.5f, 1.0f ) );
+	} else if ( m_AIUnits.size() == 0 ) {
+		// Human Wins
+		g_TextPrinter.PrintText( "VICTORY", Vector2i( m_Window->getSize().x / 2, m_Window->getSize().y / 3 ), 200, Color::Blue, Vector2f( 0.5f, 1.0f ) );
+	}
 
 	// Resolve collisions by pushing units away from each other.
 	for ( auto& unit : m_PlayerUnits ) {
@@ -71,6 +82,8 @@ void Game::Update( float deltaTime ) {
 		}
 		unit.SetPosition( unit.GetPosition() + UNIT_PENETRATION_RESOLVING * penetrationTotal );
 	}
+
+	g_TextPrinter.Update( deltaTime );
 }
 
 void Game::Draw() {
@@ -81,4 +94,6 @@ void Game::Draw() {
 	for ( auto& unit : m_AIUnits ) {
 		unit.Draw( m_Window );
 	}
+
+	g_TextPrinter.Draw( *m_Window );
 }

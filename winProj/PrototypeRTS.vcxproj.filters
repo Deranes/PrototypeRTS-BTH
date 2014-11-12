@@ -17,6 +17,9 @@
     <Filter Include="Source Files\math">
       <UniqueIdentifier>{79be3a35-9211-4c7e-bc29-d18f3e756b23}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\graphics">
+      <UniqueIdentifier>{dd61981f-551b-45f3-8da7-b7179e1cd3f0}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\src\Main.cpp">
@@ -43,6 +46,9 @@
     <ClCompile Include="..\src\game\entities\AIPlayer.cpp">
       <Filter>Source Files\game\entities</Filter>
     </ClCompile>
+    <ClCompile Include="..\src\graphics\TextPrinter.cpp">
+      <Filter>Source Files\graphics</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\src\game\Game.h">
@@ -68,6 +74,9 @@
     </ClInclude>
     <ClInclude Include="..\src\game\entities\HumanPlayer.h">
       <Filter>Source Files\game\entities</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\graphics\TextPrinter.h">
+      <Filter>Source Files\graphics</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

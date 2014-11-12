@@ -2,6 +2,7 @@
 
 #include "../../math/Math.h"
 #include "Player.h"
+#include "../../graphics/TextPrinter.h"
 
 using namespace sf;
 using namespace math;
@@ -47,6 +48,7 @@ void Unit::Update( float deltaTime ) {
 			if ( distLeft <= UNIT_MELEE_RANGE + UNIT_RADIUS ) {
 				m_AttackTarget->Damage( UNIT_MELEE_DAMAGE );
 				m_AttackCooldownLeft = UNIT_MELEE_COOLDOWN;
+				//g_TextPrinter.PrintFloatingText( Vector2i( m_AttackTarget->GetPosition().x, m_AttackTarget->GetPosition().y ), UNIT_MELEE_DAMAGE, 3.0f );
 			} else if ( distance.x != 0.0f || distance.y != 0.0f ) {
 				m_Position += ( fminf(distLeft, maxDist) / distLeft ) * distance;
 			}

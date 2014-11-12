@@ -24,6 +24,7 @@
     <ClCompile Include="..\src\game\entities\Player.cpp" />
     <ClCompile Include="..\src\game\entities\Unit.cpp" />
     <ClCompile Include="..\src\game\Game.cpp" />
+    <ClCompile Include="..\src\graphics\TextPrinter.cpp" />
     <ClCompile Include="..\src\input\GlobalMouse.cpp" />
     <ClCompile Include="..\src\Main.cpp" />
     <ClCompile Include="..\src\math\Vector2f.cpp" />
@@ -34,6 +35,7 @@
     <ClInclude Include="..\src\game\entities\Player.h" />
     <ClInclude Include="..\src\game\entities\Unit.h" />
     <ClInclude Include="..\src\game\Game.h" />
+    <ClInclude Include="..\src\graphics\TextPrinter.h" />
     <ClInclude Include="..\src\input\GlobalMouse.h" />
     <ClInclude Include="..\src\math\Math.h" />
     <ClInclude Include="..\src\math\Vector2f.h" />
