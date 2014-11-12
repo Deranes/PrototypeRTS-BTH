@@ -71,16 +71,37 @@ void Unit::Update( float deltaTime, std::vector<Unit>& unitsHostile ) {
 		} break;
 
 		case UnitState::AttackMoving : {
-			const Vector2f	distance	= m_MoveTo - m_Position;
-			const float		distLeft	= vec2f::Length( distance );
-			const float		maxDist		= UNIT_MOVESPEED * deltaTime;
-
-			if ( distLeft <= maxDist ) {
-				m_UnitState = UnitState::Idle;
+			if ( !m_AttackTarget ) {
+				float closest = FLT_MAX;
+				for ( auto& enemy : unitsHostile ) {
+					float distSqrd = math::vec2f::LengthSqrd( enemy.GetPosition() - m_Position );
+					if ( distSqrd < closest ) {
+						closest = distSqrd;
+						m_AttackTarget = &enemy;
+					}
+				}
 			}
 
-			if ( distance.x != 0.0f || distance.y != 0.0f ) {
-				m_Position += ( fminf(distLeft, maxDist) / distLeft ) * distance;
+			if ( m_AttackTarget ) {
+				const Vector2f	distance	= m_AttackTarget->GetPosition() - m_Position;
+				const float		distLeft	= vec2f::Length( distance );
+				const float		maxDist		= UNIT_MOVESPEED * deltaTime;
+
+				if ( distLeft <= UNIT_MELEE_RANGE + UNIT_RADIUS ) {
+					m_AttackTarget->Damage( UNIT_MELEE_DAMAGE );
+					m_AttackCooldownLeft = UNIT_MELEE_COOLDOWN;
+					//g_TextPrinter.PrintFloatingText( Vector2i( m_AttackTarget->GetPosition().x, m_AttackTarget->GetPosition().y ), UNIT_MELEE_DAMAGE, 3.0f );
+				} else if ( distance.x != 0.0f || distance.y != 0.0f ) {
+					m_Position += ( fminf(distLeft, maxDist) / distLeft ) * distance;
+				}
+			} else {
+				const Vector2f	distance	= m_MoveTo - m_Position;
+				const float		distLeft	= vec2f::Length( distance );
+				const float		maxDist		= UNIT_MOVESPEED * deltaTime;
+
+				if ( distance.x != 0.0f || distance.y != 0.0f ) {
+					m_Position += ( fminf(distLeft, maxDist) / distLeft ) * distance;
+				}
 			}
 		} break;
 	}

@@ -7,7 +7,7 @@
 #define RANDF	( rand() / static_cast<float>(RAND_MAX) )
 
 void AIPlayer::Update( std::vector<Unit>& unitsFriendly, std::vector<Unit>& unitsHostile ) {
-	m_WantsToClone = unitsFriendly.size() < 9;
+	m_WantsToClone = unitsFriendly.size() < 5;
 
 	for ( auto& unit : unitsFriendly ) {
 		float closest = FLT_MAX;
