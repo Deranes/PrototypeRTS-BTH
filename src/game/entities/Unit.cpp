@@ -11,12 +11,19 @@ void Unit::Initialize( const sf::Vector2f& position, Player* owner ) {
 	m_MoveTo		= position;
 	m_Owner			= owner;
 
+	m_HP			= UNIT_HP_MAX;
+
 	m_Sprite.setFillColor( owner->GetColor() );
 	m_Sprite.setRadius( UNIT_RADIUS );
 	m_Sprite.setOrigin( UNIT_RADIUS, UNIT_RADIUS );
 }
 
-void Unit::Update( float deltaTime ) {	
+void Unit::Update( float deltaTime ) {
+	m_AttackCooldownLeft -= deltaTime;
+	if ( m_AttackCooldownLeft > 0.0f ) {
+		return;
+	}
+
 	switch ( m_UnitState ) {
 		case UnitState::Moving : {
 			const Vector2f	distance	= m_MoveTo - m_Position;
@@ -38,14 +45,13 @@ void Unit::Update( float deltaTime ) {
 			const float		maxDist		= UNIT_MOVESPEED * deltaTime;
 
 			if ( distLeft <= UNIT_MELEE_RANGE + UNIT_RADIUS ) {
-				m_UnitState = UnitState::Idle;
+				m_AttackTarget->Damage( UNIT_MELEE_DAMAGE );
+				m_AttackCooldownLeft = UNIT_MELEE_COOLDOWN;
 			} else if ( distance.x != 0.0f || distance.y != 0.0f ) {
 				m_Position += ( fminf(distLeft, maxDist) / distLeft ) * distance;
 			}
 		} break;
 	}
-
-
 }
 
 void Unit::Draw( sf::RenderWindow* window ) {
@@ -72,6 +78,10 @@ void Unit::CalcPenetrationResolve( Unit* other, sf::Vector2f* outAppendResult ) 
 	if ( penetration > 0.0f ) {
 		*outAppendResult += distance * (penetration / distanceAsFloat);
 	}
+}
+
+void Unit::Damage( int damage ) {
+	m_HP -= damage;
 }
 
 const sf::Vector2f& Unit::GetPosition() {

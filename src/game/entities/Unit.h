@@ -2,10 +2,13 @@
 
 #include <SFML/Graphics.hpp>
 
-#define UNIT_MOVESPEED		200.0f
-#define UNIT_HP_MAX			10
+#define UNIT_HP_MAX			8
 #define UNIT_RADIUS			20.0f
+#define UNIT_MOVESPEED		200.0f
+
+#define UNIT_MELEE_DAMAGE	2
 #define UNIT_MELEE_RANGE	25.0f
+#define UNIT_MELEE_COOLDOWN	0.5f
 
 class Player;
 
@@ -24,6 +27,7 @@ public:
 	void					CommandMove				( const sf::Vector2f& targetPosition );
 	void					CommandAttackTarget		( Unit* target );
 	void					CalcPenetrationResolve	( Unit* other, sf::Vector2f* outAppendResult );
+	void					Damage					( int damage );
 
 	const sf::Vector2f&		GetPosition				( );
 	const UnitState&		GetUnitState			( );
@@ -39,4 +43,5 @@ private:
 	UnitState				m_UnitState;
 	int						m_HP;
 	Unit*					m_AttackTarget;
+	float					m_AttackCooldownLeft;
 };

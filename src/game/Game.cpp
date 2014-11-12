@@ -27,9 +27,20 @@ void Game::Update( float deltaTime ) {
 	for ( auto& unit : m_PlayerUnits ) {
 		unit.Update( deltaTime );
 	}
-
 	for ( auto& unit : m_AIUnits ) {
 		unit.Update( deltaTime );
+	}
+
+	// Check for deaths
+	for ( int i = m_PlayerUnits.size() - 1; i >= 0; --i ) {
+		if ( m_PlayerUnits[i].GetHP() <= 0 ) {
+			m_PlayerUnits.erase( m_PlayerUnits.begin() + i );
+		}
+	}
+	for ( int i = m_AIUnits.size() - 1; i >= 0; --i ) {
+		if ( m_AIUnits[i].GetHP() <= 0 ) {
+			m_AIUnits.erase( m_AIUnits.begin() + i );
+		}
 	}
 
 	// Resolve collisions by pushing units away from each other.
