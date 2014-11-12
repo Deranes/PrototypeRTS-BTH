@@ -6,7 +6,7 @@ int main() {
 	sf::ContextSettings settings;
 	settings.antialiasingLevel = 4;
 
-    sf::RenderWindow window(sf::VideoMode(1600, 900), "Large Game Project - RTS Prototype 0.5 - Cloning", sf::Style::Default, settings );
+    sf::RenderWindow window(sf::VideoMode(1600, 900), "Large Game Project - RTS Prototype 0.6 - Resource", sf::Style::Default, settings );
 
 	Game game;
 	game.Initialize( &window );

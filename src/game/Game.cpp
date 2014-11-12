@@ -56,10 +56,18 @@ void Game::Update( float deltaTime ) {
 
 	// Cloning
 	if ( m_Player.GetWantsToClone() ) {
-		m_PlayerUnits.insert( m_PlayerUnits.end(), m_PlayerUnits.begin(), m_PlayerUnits.end() );
+		int cost = UNIT_RESOURCE_COST * m_PlayerUnits.size();
+		if ( cost <= m_Player.GetResource() ) {
+			m_Player.SetResource( m_Player.GetResource() - cost );
+			m_PlayerUnits.insert( m_PlayerUnits.end(), m_PlayerUnits.begin(), m_PlayerUnits.end() );
+		}
 	}
-	if ( m_AI.GetWantsToClone() ) {
-		m_AIUnits.insert( m_AIUnits.end(), m_AIUnits.begin(), m_AIUnits.end() );
+	if ( m_AI.GetWantsToClone() && m_AI.GetResource() >= UNIT_RESOURCE_COST * m_AIUnits.size() ) {
+		int cost = UNIT_RESOURCE_COST * m_AIUnits.size();
+		if ( cost <= m_AI.GetResource() ) {
+			m_AI.SetResource( m_AI.GetResource() - cost );
+			m_AIUnits.insert( m_AIUnits.end(), m_AIUnits.begin(), m_AIUnits.end() );
+		}
 	}
 
 	// Resolve collisions by pushing units away from each other.
@@ -102,6 +110,8 @@ void Game::Draw() {
 	for ( auto& unit : m_AIUnits ) {
 		unit.Draw( m_Window );
 	}
+
+	g_TextPrinter.PrintNumber( m_Player.GetResource(), Vector2i( 0, 0 ), 30, m_Player.GetColor(), Vector2f( 0.0f, 0.0f ) );
 
 	g_TextPrinter.Draw( *m_Window );
 }

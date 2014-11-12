@@ -10,6 +10,8 @@
 #define UNIT_MELEE_RANGE	25.0f
 #define UNIT_MELEE_COOLDOWN	0.5f
 
+#define UNIT_RESOURCE_COST	5
+
 class Player;
 
 enum class UnitState {
