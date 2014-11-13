@@ -4,6 +4,8 @@
 
 using namespace sf;
 
+#define RANDF	( rand() / static_cast<float>(RAND_MAX) )
+
 void Game::Initialize( sf::RenderWindow* window ) {
 	m_Window	= window;
 
@@ -16,9 +18,14 @@ void Game::Initialize( sf::RenderWindow* window ) {
 	for ( auto& unit : m_PlayerUnits ) {
 		unit.Initialize( Vector2f( 100.0f, window->getSize().y - 100.0f ), &m_Player );
 	}
-
 	for ( auto& unit : m_AIUnits ) {
 		unit.Initialize( Vector2f( window->getSize().x - 100.0f, 100.0f ), &m_AI );
+	}
+
+	m_Resources.resize( 30 );
+	for ( auto& resource : m_Resources ) {
+		resource.Initialize( Vector2f(	RESOURCE_RADIUS + RANDF * ( window->getSize().x - RESOURCE_RADIUS * 2 ),
+										RESOURCE_RADIUS + RANDF * ( window->getSize().y - RESOURCE_RADIUS * 2 ) ) );
 	}
 }
 
@@ -82,6 +89,12 @@ void Game::Update( float deltaTime ) {
 		for ( auto& enemyUnit : m_AIUnits ) {
 			unit.CalcPenetrationResolve( &enemyUnit, &penetrationTotal );
 		}
+		for ( int i = m_Resources.size() -1; i >= 0; --i ) {
+			if ( unit.CalcPenetrationResolve( &m_Resources[i], &penetrationTotal ) ) {
+				m_Player.SetResource( m_Player.GetResource() + m_Resources[i].Worth );
+				m_Resources.erase( m_Resources.begin() + i );
+			}
+		}
 		unit.SetPosition( unit.GetPosition() + UNIT_PENETRATION_RESOLVING * penetrationTotal );
 	}
 
@@ -96,6 +109,12 @@ void Game::Update( float deltaTime ) {
 		for ( auto& enemyUnit : m_PlayerUnits ) {
 			unit.CalcPenetrationResolve( &enemyUnit, &penetrationTotal );
 		}
+		for ( int i = m_Resources.size() -1; i >= 0; --i ) {
+			if ( unit.CalcPenetrationResolve( &m_Resources[i], &penetrationTotal ) ) {
+				m_AI.SetResource( m_AI.GetResource() + m_Resources[i].Worth );
+				m_Resources.erase( m_Resources.begin() + i );
+			}
+		}
 		unit.SetPosition( unit.GetPosition() + UNIT_PENETRATION_RESOLVING * penetrationTotal );
 	}
 
@@ -106,12 +125,16 @@ void Game::Draw() {
 	for ( auto& unit : m_PlayerUnits ) {
 		unit.Draw( m_Window );
 	}
-
 	for ( auto& unit : m_AIUnits ) {
 		unit.Draw( m_Window );
 	}
 
-	g_TextPrinter.PrintNumber( m_Player.GetResource(), Vector2i( 0, 0 ), 30, m_Player.GetColor(), Vector2f( 0.0f, 0.0f ) );
+	for ( auto& resource : m_Resources ) {
+		resource.Draw( m_Window );
+	}
+
+	g_TextPrinter.PrintNumber( m_Player.GetResource(),	Vector2i( 0, 0 ),						30, m_Player.GetColor(),	Vector2f( 0.0f, 0.0f ) );
+	g_TextPrinter.PrintNumber( m_AI.GetResource(),		Vector2i( m_Window->getSize().x, 0 ),	30, m_AI.GetColor(),		Vector2f( 1.0f, 0.0f ) );
 
 	g_TextPrinter.Draw( *m_Window );
 }

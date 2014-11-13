@@ -22,6 +22,7 @@
     <ClCompile Include="..\src\game\entities\AIPlayer.cpp" />
     <ClCompile Include="..\src\game\entities\HumanPlayer.cpp" />
     <ClCompile Include="..\src\game\entities\Player.cpp" />
+    <ClCompile Include="..\src\game\entities\Resource.cpp" />
     <ClCompile Include="..\src\game\entities\Unit.cpp" />
     <ClCompile Include="..\src\game\Game.cpp" />
     <ClCompile Include="..\src\graphics\TextPrinter.cpp" />
@@ -33,6 +34,7 @@
     <ClInclude Include="..\src\game\entities\AIPlayer.h" />
     <ClInclude Include="..\src\game\entities\HumanPlayer.h" />
     <ClInclude Include="..\src\game\entities\Player.h" />
+    <ClInclude Include="..\src\game\entities\Resource.h" />
     <ClInclude Include="..\src\game\entities\Unit.h" />
     <ClInclude Include="..\src\game\Game.h" />
     <ClInclude Include="..\src\graphics\TextPrinter.h" />

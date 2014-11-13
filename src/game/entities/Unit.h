@@ -14,6 +14,7 @@
 #define UNIT_AGGRO_DISTANCE	300.0f
 
 class Player;
+class Resource;
 
 enum class UnitState {
 	Idle,
@@ -33,6 +34,7 @@ public:
 	void					CommandAttackMove		( const sf::Vector2f& targetPosition );
 	void					CommandAttackTarget		( Unit* target );
 	void					CalcPenetrationResolve	( Unit* other, sf::Vector2f* outAppendResult );
+	bool					CalcPenetrationResolve	( Resource* resource, sf::Vector2f* outAppendResult );
 	void					Damage					( int damage );
 
 	const sf::Vector2f&		GetPosition				( ) const;

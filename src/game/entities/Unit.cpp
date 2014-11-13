@@ -2,6 +2,7 @@
 
 #include "../../math/Math.h"
 #include "Player.h"
+#include "Resource.h"
 #include "../../graphics/TextPrinter.h"
 
 using namespace sf;
@@ -136,6 +137,19 @@ void Unit::CalcPenetrationResolve( Unit* other, sf::Vector2f* outAppendResult ) 
 
 	if ( penetration > 0.0f ) {
 		*outAppendResult += distance * (penetration / distanceAsFloat);
+	}
+}
+
+bool Unit::CalcPenetrationResolve( Resource* resource, sf::Vector2f* outAppendResult ) {
+	Vector2f		distance		= m_Position != resource->Position ? m_Position - resource->Position : Vector2f( RANDF, RANDF );
+	const float		distanceAsFloat	= vec2f::Length( distance );
+	const float		penetration		= ( UNIT_RADIUS + resource->Radius ) - distanceAsFloat;
+
+	if ( penetration >= 0.0f ) {
+		*outAppendResult += distance * (penetration / distanceAsFloat);
+		return true;
+	} else {
+		return false;
 	}
 }
 

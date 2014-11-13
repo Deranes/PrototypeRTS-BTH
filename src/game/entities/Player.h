@@ -5,7 +5,7 @@
 
 class Unit;
 
-#define PLAYER_START_RESOURCES	400
+#define PLAYER_START_RESOURCES	0
 
 class Player {
 public:
